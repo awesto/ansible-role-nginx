@@ -1,7 +1,7 @@
 galaxy_info:
-  author: your name
+  author: René Fleschenberg <rene@fleschenberg.net>
   description: 
-  company: your company (optional)
+  company: Awesto
   
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -14,9 +14,9 @@ galaxy_info:
   # - GPLv3
   # - Apache
   # - CC-BY
-  license: license (GPLv2, CC-BY, etc)
+  license: BSD
   
-  min_ansible_version: 1.2
+  min_ansible_version: 2.0
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
