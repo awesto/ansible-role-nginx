@@ -4,6 +4,9 @@ nginx
 This role is written for internal use by Awesto and not designed to cover
 more general use-cases. You probably do not want to use it.
 
+This role configures nginx for a gunicorn backend reachable via a local unix
+socket.
+
 Requirements
 ------------
 
