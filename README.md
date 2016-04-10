@@ -25,7 +25,16 @@ None.
 
 Example Playbook
 ----------------
-
+```
+- hosts: webservers
+  roles:
+  - nginx
+  vars:
+  - nginx_vhosts:
+    - domainname: my.example.org
+      vhost_template: nginx.conf.j2
+      listen_ip: 1.2.3.4
+```
 
 License
 -------
