@@ -1,2 +1,19 @@
 ---
-# tasks file for .
+- name: nginx package is installed
+  apt: name=nginx state=latest
+
+- name: vhost config files are installed
+  template:
+    src: "{{ item.vhost_template }}"
+    dest: /etc/nginx/sites-available/{{ item.domainname }}.conf
+  notify: reload nginx
+  with_items: "{{ nginx_vhosts }}"
+
+- name: nginx vhosts are enabled
+  file: name=/etc/nginx/sites-enabled/{{ item.domainname }}.conf
+        state=link
+        src=/etc/nginx/sites-available/{{ item.domainname }}.conf
+  with_items: "{{ nginx_vhosts }}"
+
+- name: nginx service is enabled and started
+  service: name=nginx state=started enabled=true
