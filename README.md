@@ -1,11 +1,8 @@
 nginx
 =====
 
-This role is written for internal use by Awesto and not designed to cover
-more general use-cases. You probably do not want to use it.
-
-This role configures nginx for a gunicorn backend reachable via a local unix
-socket.
+This role installs nginx and installs vhost config files generated from
+playbook-supplied templates.
 
 Requirements
 ------------
@@ -14,12 +11,11 @@ None.
 
 Role Variables
 --------------
-```
-nginx_vhosts:
-  - domainname: my.example.org
-    vhost_template: nginx.conf.j2
-    listen_ip: 1.2.3.4
-```
+
+* `nginx_vhosts`: A list of mappings. Each item must have at least the keys
+  `domainname` and `vhost_template`. You can add more keys to pass variables
+  to your vhost template.
+
 
 Dependencies
 ------------
@@ -36,7 +32,6 @@ Example Playbook
   - nginx_vhosts:
     - domainname: my.example.org
       vhost_template: nginx.conf.j2
-      listen_ip: 1.2.3.4
 ```
 
 License
