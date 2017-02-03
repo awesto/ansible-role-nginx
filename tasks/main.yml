@@ -1,6 +1,14 @@
 ---
-- name: nginx package is installed
-  apt: name=nginx state=latest
+- name: Enable backports repository
+  apt_repository:
+    repo: deb http://ftp.debian.org/debian jessie-backports main
+    state: present
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: latest
+    default_release: jessie-backports
 
 - name: vhost config files are installed
   template:
