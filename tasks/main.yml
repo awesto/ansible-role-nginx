@@ -4,6 +4,10 @@
     repo: deb http://ftp.debian.org/debian jessie-backports main
     state: present
 
+- name: update the apt cache
+  apt: update_cache=yes cache_valid_time=7200
+  become: yes
+
 - name: Install nginx
   apt:
     name: nginx
