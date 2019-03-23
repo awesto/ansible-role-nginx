@@ -12,7 +12,7 @@
   apt:
     name: nginx
     state: latest
-    default_release: jessie-backports
+    default_release: main
 
 - name: vhost config files are installed
   template:
