@@ -1,31 +1,29 @@
 ---
-- name: Enable backports repository
-  apt_repository:
-    repo: deb http://ftp.debian.org/debian jessie-backports main
-    state: present
+  - apt: update_cache=yes cache_valid_time=3600
+    become: yes
+    when: ansible_pkg_mgr == "apt"
+    tags: install
 
-- name: update the apt cache
-  apt: update_cache=yes cache_valid_time=7200
-  become: yes
+  - name: install certbot (Debian jessie)
+    include: debian-jessie.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
 
-- name: Install nginx
-  apt:
-    name: nginx
-    state: latest
-    default_release: main
+  - name: install certbot (Debian stretch)
+    include: debian-stretch.yml
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
 
-- name: vhost config files are installed
-  template:
-    src: "{{ item.vhost_template }}"
-    dest: /etc/nginx/sites-available/{{ item.domainname }}.conf
-  notify: reload nginx
-  with_items: "{{ nginx_vhosts }}"
+  - name: vhost config files are installed
+    template:
+      src: "{{ item.vhost_template }}"
+      dest: /etc/nginx/sites-available/{{ item.domainname }}.conf
+    notify: reload nginx
+    with_items: "{{ nginx_vhosts }}"
 
-- name: nginx vhosts are enabled
-  file: name=/etc/nginx/sites-enabled/{{ item.domainname }}.conf
-        state=link
-        src=/etc/nginx/sites-available/{{ item.domainname }}.conf
-  with_items: "{{ nginx_vhosts }}"
+  - name: nginx vhosts are enabled
+    file: name=/etc/nginx/sites-enabled/{{ item.domainname }}.conf
+          state=link
+          src=/etc/nginx/sites-available/{{ item.domainname }}.conf
+    with_items: "{{ nginx_vhosts }}"
 
-- name: nginx service is enabled and started
-  service: name=nginx state=started enabled=true
+  - name: nginx service is enabled and started
+    service: name=nginx state=started enabled=true
