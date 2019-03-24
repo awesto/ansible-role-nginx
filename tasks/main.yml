@@ -1,14 +1,11 @@
 ---
-- name: Enable backports repository
-  apt_repository:
-    repo: deb http://ftp.debian.org/debian jessie-backports main
-    state: present
+- name: install nginx (Debian jessie)
+  include: debian-jessie.yml
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
 
-- name: Install nginx
-  apt:
-    name: nginx
-    state: latest
-    default_release: jessie-backports
+- name: install nginx (Debian stretch)
+  include: debian-stretch.yml
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
 
 - name: vhost config files are installed
   template:
