@@ -7,6 +7,10 @@
   include: debian-stretch.yml
   when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
 
+- name: install nginx (Debian buster)
+  include: debian-buster.yml
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "buster"
+
 - name: vhost config files are installed
   template:
     src: "{{ item.vhost_template }}"
